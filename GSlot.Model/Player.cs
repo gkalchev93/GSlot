@@ -14,7 +14,7 @@ namespace GSlot.Model
         {
             var newBet = this.BetAmount + value;
 
-            if (newBet < this.Balance)
+            if (newBet <= this.Balance)
                 this.BetAmount = newBet;
         }
 
@@ -24,6 +24,11 @@ namespace GSlot.Model
 
             if (newBet > 0)
                 this.BetAmount = newBet;
+        }
+
+        public bool ValidateBet()
+        {
+            return this.BetAmount <= this.Balance;
         }
     }
 }

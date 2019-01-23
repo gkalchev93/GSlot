@@ -30,7 +30,7 @@ namespace GSlot.Logic
 
         public void Run()
         {
-            while (this.Player.Balance > 0)
+            while (this.Player.Balance > 0 && this.Player.Balance >= GameConfiguration.DefaultBetStep)
             {
                 try
                 {
@@ -62,28 +62,33 @@ namespace GSlot.Logic
             }
         }
 
-        private decimal SpinProcess()
+        private void SpinProcess()
         {
-            this.Machine.Grid.Clear();
-            decimal spinWinCoef = 0;
-
-            for (int i = 0; i < this.Machine.TotalRows; i++)
+            if (this.Player.ValidateBet())
             {
-                var row = new char[this.Machine.TotalCols];
-                for (int j = 0; j < this.Machine.TotalCols; j++)
+                this.Machine.Grid.Clear();
+                decimal spinWinCoef = 0;
+
+                for (int i = 0; i < this.Machine.TotalRows; i++)
                 {
-                    row[j] = this.symbolBag.GetRandomItem();
+                    var row = new char[this.Machine.TotalCols];
+                    for (int j = 0; j < this.Machine.TotalCols; j++)
+                    {
+                        row[j] = this.symbolBag.GetRandomItem();
+                    }
+
+                    this.Machine.Grid.Add(row);
+                    spinWinCoef += CheckMatchCoef(row);
                 }
 
-                this.Machine.Grid.Add(row);
-                spinWinCoef += CheckMatchCoef(row);
+                var wonAmount = spinWinCoef * this.Player.BetAmount;
+                AddGameHistory(wonAmount);
+                this.Player.Balance += wonAmount - this.Player.BetAmount;
             }
-
-            var wonAmount = spinWinCoef * this.Player.BetAmount;
-            AddGameHistory(wonAmount);
-            this.Player.Balance += wonAmount - this.Player.BetAmount;
-
-            return spinWinCoef;
+            else
+            {
+                throw new Exception(MessagesConstants.NoMoney);
+            }
         }
 
         private void AddGameHistory(decimal wonAmount)
