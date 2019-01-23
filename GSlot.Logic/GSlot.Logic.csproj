@@ -41,7 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine.cs" />
+    <Compile Include="Interfaces\IEngine.cs" />
+    <Compile Include="PlayerCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GSlot.Common\GSlot.Common.csproj">
+      <Project>{04B1705C-D441-440E-8581-044FC4892057}</Project>
+      <Name>GSlot.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GSlot.Model\GSlot.Model.csproj">
+      <Project>{6C4B821A-A68D-4020-B24A-03584653283E}</Project>
+      <Name>GSlot.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
