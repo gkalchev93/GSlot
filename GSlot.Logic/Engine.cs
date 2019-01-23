@@ -28,8 +28,6 @@ namespace GSlot.Logic
 
         public void Run()
         {
-            Init();
-
             while (this.Player.Balance > 0)
             {
                 try
@@ -169,6 +167,7 @@ namespace GSlot.Logic
             {
                 symbolBag.Add(s.Character, s.Probability);
             }
+
             symbolBag.Shuffle();
         }
     }
