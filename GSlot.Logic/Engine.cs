@@ -119,7 +119,10 @@ namespace GSlot.Logic
 
             if (countSeq > GameConfiguration.MinSequance)
             {
-                coef = this.Machine.GetSymbolCoefficient(matchChar) * countSeq;
+                for (int i = 0; i < countSeq; i++)
+                {
+                    coef += this.Machine.GetSymbolCoefficient(row[i]);
+                }
             }
 
             return coef;
