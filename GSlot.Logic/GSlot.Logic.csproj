@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Engine.cs" />
     <Compile Include="Interfaces\IEngine.cs" />
+    <Compile Include="Interfaces\IPresenter.cs" />
+    <Compile Include="Interfaces\IUserInteraction.cs" />
     <Compile Include="PlayerCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
