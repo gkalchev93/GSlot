@@ -59,7 +59,6 @@ namespace GSlot.Logic
                 {
                     Presenter.ShowMessage(ex.Message);
                 }
-
             }
         }
 

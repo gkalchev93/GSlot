@@ -15,9 +15,9 @@ namespace GSlot.ConsoleClient
 
         public void ShowGameHistory(List<Tuple<decimal, decimal>> gameHistory)
         {
-            Console.WriteLine("Bet | Won");
-
-            foreach (var i in gameHistory)
+            Console.WriteLine("\n\n\nLast 10 Spins \nBet | Won");
+            int count = gameHistory.Count > 10 ? 10 : gameHistory.Count;
+            foreach (var i in gameHistory.GetRange(0, count))
             {
                 Console.WriteLine($"{Utils.ToCurrency(i.Item2)} | {Utils.ToCurrency(i.Item1)}");
             }
