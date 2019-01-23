@@ -30,6 +30,7 @@ namespace GSlot.Logic
 
         public void Run()
         {
+            ShowGameInfo();
             while (this.Player.Balance > 0 && this.Player.Balance >= GameConfiguration.DefaultBetStep)
             {
                 try
@@ -168,6 +169,9 @@ namespace GSlot.Logic
 
         public void Init()
         {
+            LoadSymbolsConfig();
+            this.Presenter.ShowMessage(string.Format(MessagesConstants.GameInfo, string.Join("\n", this.Machine.Symbols)));
+
             decimal balance = 0;
             this.Player.BetAmount = GameConfiguration.DefaultBetStep;
             this.Presenter.ShowMessage(MessagesConstants.InputBalance);
@@ -177,10 +181,6 @@ namespace GSlot.Logic
             }
 
             this.Player.Balance = balance;
-            LoadSymbolsConfig();
-
-            this.Presenter.Clear();
-            this.Presenter.ShowMessage(string.Format(MessagesConstants.GameInfo, string.Join("\n", this.Machine.Symbols)));
 
             // Shuffle the items in the bag 
             foreach (var s in this.Machine.Symbols)
