@@ -3,6 +3,7 @@ using GSlot.Logic.Interfaces;
 using GSlot.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GSlot.Logic
 {
@@ -10,7 +11,7 @@ namespace GSlot.Logic
     {
         private static Random random = new Random();
         private List<char> symbolBag;
-        private decimal lastWon;
+        private List<Tuple<decimal, decimal>> gameHistory;
 
         private IUserInteraction UserInteraction;
         private IPresenter Presenter;
@@ -24,6 +25,7 @@ namespace GSlot.Logic
             this.Machine = new Machine();
             this.Player = new Player();
             this.symbolBag = new List<char>();
+            this.gameHistory = new List<Tuple<decimal, decimal>>();
         }
 
         public void Run()
@@ -65,7 +67,6 @@ namespace GSlot.Logic
         {
             this.Machine.Grid.Clear();
             decimal spinWinCoef = 0;
-            lastWon = 0;
 
             for (int i = 0; i < this.Machine.TotalRows; i++)
             {
@@ -79,10 +80,16 @@ namespace GSlot.Logic
                 spinWinCoef += CheckMatchCoef(row);
             }
 
-            this.lastWon = spinWinCoef * this.Player.BetAmount;
-            this.Player.Balance += this.lastWon - this.Player.BetAmount;
+            var wonAmount = spinWinCoef * this.Player.BetAmount;
+            AddGameHistory(wonAmount);
+            this.Player.Balance += wonAmount - this.Player.BetAmount;
 
             return spinWinCoef;
+        }
+
+        private void AddGameHistory(decimal wonAmount)
+        {
+            gameHistory.Insert(0, Tuple.Create(wonAmount, this.Player.BetAmount));
         }
 
         private decimal CheckMatchCoef(char[] row)
@@ -130,7 +137,16 @@ namespace GSlot.Logic
         {
             Presenter.Clear();
             Presenter.ShowGrid(this.Machine.Grid);
-            Presenter.ShowPlayerStats(this.Player, this.lastWon);
+            Presenter.ShowPlayerStats(this.Player, GetLastWon());
+            Presenter.ShowGameHistory(gameHistory);
+        }
+
+        private decimal GetLastWon()
+        {
+            if (this.gameHistory.Count > 0)
+                return this.gameHistory.First().Item1;
+            else
+                return 0;
         }
 
         private void LoadSymbolsConfig()

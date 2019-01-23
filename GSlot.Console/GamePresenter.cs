@@ -13,6 +13,16 @@ namespace GSlot.ConsoleClient
             Console.Clear();
         }
 
+        public void ShowGameHistory(List<Tuple<decimal, decimal>> gameHistory)
+        {
+            Console.WriteLine("Bet | Won");
+
+            foreach (var i in gameHistory)
+            {
+                Console.WriteLine($"{Utils.ToCurrency(i.Item2)} | {Utils.ToCurrency(i.Item1)}");
+            }
+        }
+
         public void ShowGrid(List<char[]> grid)
         {
             foreach (var row in grid)
