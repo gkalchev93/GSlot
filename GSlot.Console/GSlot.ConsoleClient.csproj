@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{04B1705C-D441-440E-8581-044FC4892057}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GSlot.Common</RootNamespace>
-    <AssemblyName>GSlot.Common</AssemblyName>
+    <ProjectGuid>{7506BFC5-4EB9-460B-BE56-51FDBC7E4AC7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>GSlot.Console</RootNamespace>
+    <AssemblyName>GSlot.Console</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,11 +43,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\ExtensionMethods.cs" />
-    <Compile Include="GameConfiguration.cs" />
-    <Compile Include="MessagesConstants.cs" />
+    <Compile Include="GamePresenter.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="UserInteraction.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GSlot.Common\GSlot.Common.csproj">
+      <Project>{04B1705C-D441-440E-8581-044FC4892057}</Project>
+      <Name>GSlot.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GSlot.Logic\GSlot.Logic.csproj">
+      <Project>{0E25892C-68DA-410B-9D8A-4FBDE9173C70}</Project>
+      <Name>GSlot.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GSlot.Model\GSlot.Model.csproj">
+      <Project>{6C4B821A-A68D-4020-B24A-03584653283E}</Project>
+      <Name>GSlot.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
